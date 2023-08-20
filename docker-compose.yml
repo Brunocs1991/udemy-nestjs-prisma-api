@@ -10,7 +10,7 @@ services:
       - "3000:3000"
       - "5555:5555"
     volumes:
-      - ./:/home/node/app
+      - .:/home/node/app
     depends_on:
       - db
 
