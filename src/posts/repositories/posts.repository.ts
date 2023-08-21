@@ -32,4 +32,12 @@ export class PostsRepository {
       data: updatePostDto,
     });
   }
+
+  async remove(id: number): Promise<PostEntity> {
+    return this.prisma.post.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }
