@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepositoy } from './repositories/users.repositoy';
 import { UserEntity } from './entities/user.entity';
-import { UnauthorizedError } from '../common/errors/types/UnauthorizedError';
+import { NotFoundError } from 'src/common/errors/types/NotFoundError';
 
 @Injectable()
 export class UsersService {
@@ -14,12 +14,15 @@ export class UsersService {
   }
 
   findAll(): Promise<UserEntity[]> {
-    throw new UnauthorizedError('Não autorizado');
-    // Todo return this.usersRepository.findAll();
+    return this.usersRepository.findAll();
   }
 
-  findOne(id: number): Promise<UserEntity> {
-    return this.usersRepository.findOne(id);
+  async findOne(id: number): Promise<UserEntity> {
+    const user: UserEntity = await this.usersRepository.findOne(id);
+    if (!user) {
+      throw new NotFoundError('Registro não encontrado');
+    }
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
