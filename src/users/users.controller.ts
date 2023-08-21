@@ -10,9 +10,10 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiForbiddenResponse, ApiResponse } from '@nestjs/swagger';
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -20,6 +21,13 @@ export class UsersController {
   @ApiResponse({
     status: 409,
     description: 'Conflito de email',
+    schema: {
+      example: {
+        statusCode: 409,
+        message: ['email must ne a email'],
+        error: 'Conflit',
+      },
+    },
   })
   @ApiForbiddenResponse({ description: 'Acesso negado' })
   create(@Body() createUserDto: CreateUserDto) {
