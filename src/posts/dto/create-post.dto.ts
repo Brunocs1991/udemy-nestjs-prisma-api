@@ -8,5 +8,5 @@ export class CreatePostDto {
   @IsNotEmpty()
   content: string;
   @IsEmail()
-  authorEmail: number;
+  authorEmail: string;
 }
